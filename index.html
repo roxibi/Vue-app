@@ -6,17 +6,58 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="https://unpkg.com/vue@3.0.2"></script>
+        <style>
+            body {
+                background-color: grey;
+                max-width: 960px;
+                margin: 20px auto;
+            }
+            p,
+            h3,
+            ul {
+                margin: 0;
+                padding: 0;
+            }
+            li {
+                list-style: none;
+                background-color: #ffffff;
+                margin: 50px auto;
+                padding: 10px 20px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            li.fav {
+                background-color: pink;
+            }
+           
+        </style>
     </head>
     <body>
         <h1>First vue app</h1>
         <div id="app">
-           <div v-if="showBook">
-            <h2>{{ title }} - a{{author}} - {{ place }} - {{ age }}</h2>
-        </div>
-        <button @click="toggleShowBook">toggle display Book</button>
+            <div v-if="showBook">
+                <ul>
+                    <li v-for="book in filteredBooks" :class="{ fav:book.isFav }" @click="toggleFav(book)">
+                        <img :src="book.img" :alt="book.title" />
+                        <a :href="url">link</a>
+                        <h2>{{ book.title }}</h2>
+                        <p>{{book.author}}</p>
+                    </li>
+                </ul>
+            </div>
+            <button @click="toggleShowBook">
+                <span v-if="!showBook">Show Books</span><span v-else>Hide Books</span>
+            </button>
             <button v-on:click="ge++">increase age</button>
             <button @click="age--">decrease age</button>
             <div @click="changeTitle('Katharina Blum')">change title</div>
+
+            <div class="box" @mouseover="handleEvent($event, 5)">mouseover</div>
+            <div class="box" @mouseleave="handleEvent">mouseleave</div>
+            <div class="box" @dblclick="handleEvent">double click</div>
+            <div class="box" @mousemove="handleMouseMove">position {{x}} {{y}}</div>
         </div>
         <script src="app.js"></script>
     </body>
